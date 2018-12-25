@@ -1,3 +1,6 @@
+.todo
+*.db
+
 # SA Frontend ignored files
 node_modules/
 **/sa-frontend/build/
