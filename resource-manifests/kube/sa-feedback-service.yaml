@@ -9,6 +9,7 @@ spec:
     metadata:
       labels:
         app: sa-feedback
+        version: v1
     spec:
       containers:
       - image: rinormaloku/sentiment-analysis-feedback:istio-tracing
