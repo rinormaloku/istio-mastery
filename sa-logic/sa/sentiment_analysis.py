@@ -7,6 +7,7 @@ from flask_opentracing import FlaskTracer
 from os import getenv
 
 JAEGER_HOST = getenv('JAEGER_HOST', 'localhost')
+JAEGER_SERVICE_NAME = getenv('JAEGER_SERVICE_NAME', 'sa-logic')
 
 app = Flask(__name__)
 
@@ -15,7 +16,7 @@ config = Config(config={'sampler': {'type': 'const', 'param': 1},
                         'propagation': 'b3',
                         'local_agent':
                             {'reporting_host': JAEGER_HOST}},
-                service_name="sa-logic")
+                service_name=JAEGER_SERVICE_NAME)
 jaeger_tracer = config.initialize_tracer()
 tracer = FlaskTracer(jaeger_tracer)
 

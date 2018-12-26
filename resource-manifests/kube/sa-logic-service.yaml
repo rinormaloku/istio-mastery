@@ -23,6 +23,8 @@ spec:
           env:
             - name: JAEGER_HOST
               value: "jaeger-agent.istio-system.svc.cluster.local"
+            - name: JAEGER_SERVICE_NAME
+              value: sa-logic
           ports:
             - containerPort: 5000
 ---
@@ -32,7 +34,8 @@ metadata:
   name: sa-logic
 spec:
   ports:
-    - port: 80
+    - name: http
+      port: 80
       protocol: TCP
       targetPort: 5000
   selector:
