@@ -19,9 +19,9 @@ spec:
         - name: DATABASE_DIR
           value: /usr/db
         - name: JAEGER_SERVICE_NAME
-          value: "sa-feedback"
+          value: sa-feedback
         - name: JAEGER_AGENT_HOST
-          value: "jaeger-agent.istio-system.svc.cluster.local"
+          value: jaeger-agent.istio-system.svc.cluster.local
         - name: JAEGER_REPORTER_LOG_SPANS
           value: "true"
         - name: JAEGER_SAMPLER_TYPE

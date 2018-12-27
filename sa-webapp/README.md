@@ -30,8 +30,14 @@ Get Docker Machine IP by executing:
 
 Use this one in the command.
 
-
 ## Pushing the container
 ` $ docker push $DOCKER_USER_ID/sentiment-analysis-web-app `
 
 
+### Running Jaeger for Tracing
+$ docker run  --rm  -p5775:5775/udp  \ 
+    -p 6831:6831/udp  \ 
+    -p 6832:6832/udp  \
+    -p 16686:16686  \
+    -p 14268:14268  \
+    jaegertracing/all-in-one:1.3

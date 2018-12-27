@@ -1,10 +1,9 @@
+from os import getenv
 from textblob import TextBlob
 from flask import Flask, request, jsonify
 from flask_api import status
-
 from jaeger_client import Config
 from flask_opentracing import FlaskTracer
-from os import getenv
 
 JAEGER_HOST = getenv('JAEGER_HOST', 'localhost')
 JAEGER_SERVICE_NAME = getenv('JAEGER_SERVICE_NAME', 'sa-logic')
@@ -17,6 +16,7 @@ config = Config(config={'sampler': {'type': 'const', 'param': 1},
                         'local_agent':
                             {'reporting_host': JAEGER_HOST}},
                 service_name=JAEGER_SERVICE_NAME)
+
 jaeger_tracer = config.initialize_tracer()
 tracer = FlaskTracer(jaeger_tracer)
 

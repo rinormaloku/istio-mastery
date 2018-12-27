@@ -42,6 +42,8 @@ kubectl apply -f ./resource-manifests/istio/sa-virtualservice-external.yaml
 # Get the ip of the ingress controller
 kubectl get svc --all-namespaces -l  app=istio-ingressgateway -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}'
 
+EXTERNAL_IP=$(kubectl get svc -n istio-system -l app=istio-ingressgateway -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+
 ```
 
 Open the page!

@@ -14,24 +14,27 @@ spec:
     metadata:
       labels:
         app: sa-web-app
+        version: v1
     spec:
       containers:
       - image: rinormaloku/sentiment-analysis-web-app:istio-tracing
         imagePullPolicy: Always
         name: sa-web-app
         env:
-          - name: SA_LOGIC_API_URL
-            value: "http://sa-logic"
-          - name: JAEGER_SERVICE_NAME
-            value: "sa-web-app"
-          - name: JAEGER_AGENT_HOST
-            value: "jaeger-agent.istio-system.svc.cluster.local"
-          - name: JAEGER_REPORTER_LOG_SPANS
-            value: "true"
-          - name: JAEGER_SAMPLER_TYPE
-            value: "const"
-          - name: JAEGER_SAMPLER_PARAM
-            value: "1"
+        - name: SA_LOGIC_API_URL
+          value: http://sa-logic
+        - name: JAEGER_SERVICE_NAME
+          value: sa-web-app
+        - name: JAEGER_AGENT_HOST
+          value: jaeger-agent.istio-system.svc.cluster.local
+        - name: JAEGER_REPORTER_LOG_SPANS
+          value: "true"
+        - name: JAEGER_SAMPLER_TYPE
+          value: const
+        - name: JAEGER_SAMPLER_PARAM
+          value: "1"
+        - name: JAEGER_PROPAGATION
+          value: b3
         ports:
           - containerPort: 8080
 ---

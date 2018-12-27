@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: sa-logic
-        version: sa-logic
+        version: v1
     spec:
       containers:
         - image: rinormaloku/sentiment-analysis-logic:istio-tracing
@@ -22,7 +22,7 @@ spec:
           name: sa-logic
           env:
             - name: JAEGER_HOST
-              value: "jaeger-agent.istio-system.svc.cluster.local"
+              value: jaeger-agent.istio-system.svc.cluster.local
             - name: JAEGER_SERVICE_NAME
               value: sa-logic
           ports:
