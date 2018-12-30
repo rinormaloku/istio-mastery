@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sa-frontend-green
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: 
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: sa-frontend
+        version: green
+    spec:
+      containers:
+        - image: rinormaloku/sentiment-analysis-frontend:istio-green
+          imagePullPolicy: Always
+          name: sa-frontend
+          ports:
+            - containerPort: 80

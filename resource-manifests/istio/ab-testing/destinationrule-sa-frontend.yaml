@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: sa-frontend
+spec:
+  host: sa-frontend
+  trafficPolicy:
+    loadBalancer:
+      consistentHash:
+        httpHeaderName: version   # 1

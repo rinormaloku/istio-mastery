@@ -66,3 +66,12 @@ p {
   padding: 8px;
   margin: 0;
 }
+
+.green div {
+  border-radius: 2px;
+  background-color: green;
+}
+
+.green span {
+  color: white !important;
+}

@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: sa-logic-shadowing
+spec:
+  hosts:
+    - sa-logic           # 1
+  http:
+  - route:
+    - destination:
+        host: sa-logic   # 2
+        subset: v1       # 3
+      weight: 100        # 4
+    mirror:              # 5
+      host: sa-logic     
+      subset: v2

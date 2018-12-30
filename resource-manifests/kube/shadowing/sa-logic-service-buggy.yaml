@@ -1,9 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: sa-logic
-  labels:
-    app: sa-logic
+  name: sa-logic-buggy
 spec:
   replicas: 2
   minReadySeconds: 15
@@ -16,31 +14,16 @@ spec:
     metadata:
       labels:
         app: sa-logic
-        version: v1
+        version: v2
     spec:
       containers:
-        - image: rinormaloku/sentiment-analysis-logic:istio-tracing
+        - image: rinormaloku/sentiment-analysis-logic:istio-buggy
           imagePullPolicy: Always
           name: sa-logic
           env:
             - name: JAEGER_HOST
               value: jaeger-agent.istio-system.svc.cluster.local
             - name: JAEGER_SERVICE_NAME
-              value: sa-logic
+              value: sa-logic-buggy
           ports:
             - containerPort: 5000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sa-logic
-  labels:
-    app: sa-logic
-spec:
-  ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 5000
-  selector:
-    app: sa-logic

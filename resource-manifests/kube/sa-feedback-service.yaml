@@ -2,6 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: sa-feedback
+  labels:
+    app: sa-feedback
 spec:
   strategy:
     type: Recreate
@@ -42,6 +44,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sa-feedback
+  labels:
+    app: sa-feedback
 spec:
   ports:
   - name: http
