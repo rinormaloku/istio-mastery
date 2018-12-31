@@ -5,7 +5,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
-import Polarity from "./components/Polarity";
+import Polarity from './components/Polarity';
+import { auth } from './Routes';
 
 const style = {
     marginLeft: 12,
@@ -20,18 +21,18 @@ class App extends Component {
         };
     };
 
-    analyzeSentence() {
-        fetch('/sentiment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.auth.getAccessToken()}`
-            },
-            body: JSON.stringify({ sentence: this.textField.getValue() })
-        })
-            .then(response => response.json())
-            .then(data => this.setState(data));
-    }
+analyzeSentence() {
+    fetch('/sentiment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${auth.getAccessToken()}` // Access Token
+        },
+        body: JSON.stringify({ sentence: this.textField.getValue() })
+    })
+        .then(response => response.json())
+        .then(data => this.setState(data));
+}
 
     onEnterPress = e => {
         if (e.key === 'Enter') {
@@ -40,10 +41,8 @@ class App extends Component {
     };
 
     render() {
-        const auth = this.props.auth;
-
-        if (!this.props.auth.isAuthenticated()) {
-            this.props.auth.login();
+        if (!auth.isAuthenticated()) {
+            auth.login();
             return;
         }
 

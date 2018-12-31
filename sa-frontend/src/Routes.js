@@ -7,7 +7,7 @@ import Auth from './services/Auth';
 import history from './services/history';
 import { MuiThemeProvider } from 'material-ui';
 
-const auth = new Auth();
+export const auth = new Auth();
 
 const handleAuthentication = (nextState, replace) => {
     if(/access_token|id_token|error/.test(nextState.location.hash)) {
@@ -20,7 +20,7 @@ export const makeMainRoutes = () => {
         <MuiThemeProvider>
             <Router history={ history }>
                 <div>
-                    <Route exact path="/" render={ (props) => <App auth={ auth } { ...props } /> }/>
+                    <Route exact path="/" render={() => <App/>}/>
                     <Route exact path="/logout" render={() => <Logout/>}/>
                     <Route exact path="/callback" render={ (props) => {
                         handleAuthentication(props);

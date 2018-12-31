@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
+import {auth} from '../Routes';
 
 class Feedback extends Component {
 
@@ -40,7 +41,8 @@ class Feedback extends Component {
         fetch('/feedback', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.getAccessToken()}`
             },
             body: JSON.stringify(Object.assign({}, this.props, {correct: isCorrect}))
         })

@@ -17,7 +17,7 @@ spec:
         version: green
     spec:
       containers:
-        - image: rinormaloku/sentiment-analysis-frontend:istio-green
+        - image: rinormaloku/sentiment-analysis-frontend:istio-green-auth0
           imagePullPolicy: Always
           name: sa-frontend
           ports:

@@ -19,7 +19,7 @@ spec:
         version: white
     spec:
       containers:
-        - image: rinormaloku/sentiment-analysis-frontend:istio
+        - image: rinormaloku/sentiment-analysis-frontend:istio-auth0
           imagePullPolicy: Always
           name: sa-frontend
           ports:
@@ -35,7 +35,6 @@ spec:
   ports:
   - name: http
     port: 80
-    protocol: TCP
     targetPort: 80
   selector:
     app: sa-frontend

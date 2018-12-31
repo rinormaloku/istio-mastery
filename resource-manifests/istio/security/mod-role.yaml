@@ -1,0 +1,23 @@
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRole
+metadata:
+  name: mod-user
+  namespace: default
+spec:
+  rules:
+  - services: ["*"]
+    paths: ["*"]
+    methods: ["*"]
+---
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: mod-user-binding
+  namespace: default
+spec:
+  subjects:
+  - properties:
+      request.auth.claims[https://sa.io/group]: "Moderators"
+  roleRef:
+    kind: ServiceRole
+    name: "mod-user" 
