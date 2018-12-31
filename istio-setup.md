@@ -13,7 +13,7 @@ Switch to istio installation dir.
 
 ```bash
 
-helm template install/kubernetes/helm/istio --name istio --set global.mtls.enabled=false --set tracing.enabled=true --set kiali.enabled=true --set grafana.enabled=true --set --namespace istio-system > istio.yaml
+helm template install/kubernetes/helm/istio --name istio --set global.mtls.enabled=false --set tracing.enabled=true --set kiali.enabled=true --set grafana.enabled=true --namespace istio-system > istio.yaml
 
 kubectl apply -f istio.yaml
 

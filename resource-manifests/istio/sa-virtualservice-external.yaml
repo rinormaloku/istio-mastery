@@ -12,7 +12,9 @@ spec:
     - uri:
         exact: /
     - uri:
-        exact: /callback
+        prefix: /callback
+    - uri:
+        exact: /logout
     - uri:
         prefix: /static
     - uri:

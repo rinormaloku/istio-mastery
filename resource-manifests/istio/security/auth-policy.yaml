@@ -1,0 +1,13 @@
+apiVersion: authentication.istio.io/v1alpha1
+kind: Policy
+metadata:
+  name: auth-policy
+spec:
+  targets:
+  - name: sa-web-app
+  - name: sa-feedback
+  origins:
+  - jwt:
+      issuer: "https://{YOUR_DOMAIN}/"
+      jwksUri: "https://{YOUR_DOMAIN}/.well-known/jwks.json"
+  principalBinding: USE_ORIGIN
