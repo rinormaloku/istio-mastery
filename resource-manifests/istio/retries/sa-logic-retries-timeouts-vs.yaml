@@ -10,7 +10,7 @@ spec:
     - destination: 
         host: sa-logic
         subset: v1
-      weight: 0
+      weight: 80
     - destination: 
         host: sa-logic
         subset: v2
