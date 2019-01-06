@@ -5,7 +5,7 @@ metadata:
   labels:
     app: sa-logic
 spec:
-  replicas: 1
+  replicas: 2
   minReadySeconds: 15
   strategy:
     type: RollingUpdate
