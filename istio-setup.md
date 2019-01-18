@@ -5,7 +5,7 @@ Commands to quickly set up the cluster with the application.
 kubectl create ns istio-system
 ```
 
-Switch to istio installation dir.
+1. Switch to istio installation dir and install istio
 
 ```bash
 
@@ -21,12 +21,25 @@ kubectl apply -f istio.yaml
 # Wait until pods are in Running or Completed state
 kubectl get pods -n istio-system
 
-kubectl label namespace default istio-injection=enabled
-
-kubectl apply -f ./resource-manifests/kube
 ```
 
-Set up the Gateway for HTTP
+2. Label the **default** namespace for auto sidecar injection
+
+```bash
+
+kubectl label namespace default istio-injection=enabled
+
+```
+
+3. Set up the application:
+
+```bash
+
+kubectl apply -f ./resource-manifests/kube
+
+```
+
+4. Set up the Gateway for ingress HTTP requests
 
 ```bash
 
@@ -34,7 +47,7 @@ kubectl apply -f resource-manifests/istio/http-gateway.yaml
 
 ```
 
-Install the virtual services so that requests are routed
+5. Install the virtual services so that requests are routed
 
 ```bash
 
@@ -43,7 +56,7 @@ kubectl apply -f resource-manifests/istio/sa-virtualservice-external.yaml
 
 ```
 
-Open the page, on the IP returned by:
+6. Open the page, on the IP returned by:
 
 ```bash
 
@@ -53,7 +66,7 @@ kubectl get svc -n istio-system \
 
 ```
 
-What we get out of the box:
+X. What we get out of the box:
 
 ```bash
  # Kiali
@@ -74,6 +87,3 @@ kubectl port-forward -n istio-system \
     $(kubectl get pod -n istio-system -l app=jaeger \
     -o jsonpath='{.items[0].metadata.name}') 16686
 ```
-
-
-
