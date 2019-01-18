@@ -1,62 +1,90 @@
-commands
+Commands to quickly set up the cluster with the application.
+
+0.  Create 'istio-system' namespace
 
 ```bash
-# Create namespace
 kubectl create ns istio-system
-
-# Create secrets for grafana and kiali
-kubectl apply -f ./resource-manifests/istio/secrets
-
 ```
 
-Switch to istio installation dir.
+1. Switch to istio installation dir and install istio into the cluster.
 
 ```bash
 
-helm template install/kubernetes/helm/istio --name istio --set global.mtls.enabled=false --set tracing.enabled=true --set kiali.enabled=true --set grafana.enabled=true --namespace istio-system > istio.yaml
+helm template install/kubernetes/helm/istio \
+  --set global.mtls.enabled=false \
+  --set tracing.enabled=true \
+  --set kiali.enabled=true \
+  --set grafana.enabled=true \
+  --namespace istio-system > istio.yaml
 
 kubectl apply -f istio.yaml
 
+# Wait until pods are in Running or Completed state
+kubectl get pods -n istio-system
+
+```
+
+2. Label the **default** namespace for auto sidecar injection
+
+```bash
+
 kubectl label namespace default istio-injection=enabled
 
+```
+
+3. Set up the application:
+
+```bash
+
 kubectl apply -f ./resource-manifests/kube
+
 ```
 
-now we need to apply the Gateway
+4. Set up the Gateway for ingress HTTP requests
 
 ```bash
 
-kubectl apply -f ./resource-manifests/istio/http-gateway.yaml
-
-# Get the ip of the ingress controller
-kubectl get svc --all-namespaces -l  app=istio-ingressgateway -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}'
+kubectl apply -f resource-manifests/istio/http-gateway.yaml 
 
 ```
 
-Install the virtual services so that calls comming in are redirected
+5. Install the virtual services so that requests are routed
 
 ```bash
 
-kubectl apply -f ./resource-manifests/istio/sa-virtualservice-external.yaml
+kubectl apply -f resource-manifests/istio/sa-virtualservice-external.yaml
 
-# Get the ip of the ingress controller
-kubectl get svc --all-namespaces -l  app=istio-ingressgateway -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}'
-
-EXTERNAL_IP=$(kubectl get svc -n istio-system -l app=istio-ingressgateway -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
 
 ```
 
-Open the page!
+6. Open the application on the IP returned by:
 
-What we get out of the box:
+```bash
+
+kubectl get svc -n istio-system \
+  -l app=istio-ingressgateway \
+  -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}'
 
 ```
-kubectl port-forward $(kubectl get pod -n istio-system -l app=kiali -o jsonpath='{.items[0].metadata.name}') -n istio-system 20001
 
-kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686:16686
+X. What we get out of the box:
 
-kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000
+```bash
+ # Kiali
+kubectl port-forward \
+    $(kubectl get pod -n istio-system -l app=kiali \
+    -o jsonpath='{.items[0].metadata.name}') \
+    -n istio-system 20001
+
+
+# Grafana
+kubectl -n istio-system port-forward \
+    $(kubectl -n istio-system get pod -l app=grafana \
+    -o jsonpath='{.items[0].metadata.name}') 3000
+
+
+# Jaeger 
+kubectl port-forward -n istio-system \
+    $(kubectl get pod -n istio-system -l app=jaeger \
+    -o jsonpath='{.items[0].metadata.name}') 16686
 ```
-
-
-
