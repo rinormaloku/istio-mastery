@@ -1,21 +1,17 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: sa-logic-canary
+  name: sa-logic
 spec:
   hosts:
-    - sa-logic
+    - sa-logic    
   http:
   - route: 
     - destination: 
         host: sa-logic
         subset: v1
-      weight: 0
+      weight: 80
     - destination: 
         host: sa-logic
         subset: v2
       weight: 20
-    timeout: 8s
-    retries:
-      attempts: 3
-      perTryTimeout: 3s

@@ -31,13 +31,14 @@ tracer = FlaskTracer(jaeger_tracer)
 @app.route("/analyse/sentiment", methods=['POST'])
 @tracer.trace()
 def analyse_sentiment():
+    content = 'this was never meant to happen, please hide'
     random_number = random.randint(1,101)
     if random_number < 34: 
         app.logger.debug('This failed badly')
-        content = 'this was never meant to happen, please hide'
         return content, status.HTTP_500_INTERNAL_SERVER_ERROR
     elif random_number < 66:
         time.sleep(30)
+        return content, status.HTTP_500_INTERNAL_SERVER_ERROR
     else:
         sentence = request.get_json()['sentence']
         polarity = TextBlob(sentence).sentences[0].polarity
