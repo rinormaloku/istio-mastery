@@ -1,11 +1,12 @@
 Commands to quickly set up the cluster with the application.
 
+0.  Create 'istio-system' namespace
+
 ```bash
-# Create namespace
 kubectl create ns istio-system
 ```
 
-1. Switch to istio installation dir and install istio
+1. Switch to istio installation dir and install istio into the cluster.
 
 ```bash
 
@@ -56,7 +57,7 @@ kubectl apply -f resource-manifests/istio/sa-virtualservice-external.yaml
 
 ```
 
-6. Open the page, on the IP returned by:
+6. Open the application on the IP returned by:
 
 ```bash
 
