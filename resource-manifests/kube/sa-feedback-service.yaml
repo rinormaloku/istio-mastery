@@ -1,10 +1,13 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sa-feedback
   labels:
     app: sa-feedback
 spec:
+  selector:
+    matchLabels:
+      app: sa-feedback
   strategy:
     type: Recreate
   template:
