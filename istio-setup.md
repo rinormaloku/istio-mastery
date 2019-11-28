@@ -5,8 +5,14 @@ Commands to quickly set up the cluster with the application.
 ```bash
 kubectl create ns istio-system
 ```
+1. Initialize istio
+```bash
 
-1. Switch to istio installation dir and install istio into the cluster.
+helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -
+
+```
+
+2. Switch to istio installation dir and install istio into the cluster.
 
 ```bash
 
@@ -24,7 +30,7 @@ kubectl get pods -n istio-system
 
 ```
 
-2. Label the **default** namespace for auto sidecar injection
+3. Label the **default** namespace for auto sidecar injection
 
 ```bash
 
@@ -32,7 +38,7 @@ kubectl label namespace default istio-injection=enabled
 
 ```
 
-3. Set up the application:
+4. Set up the application:
 
 ```bash
 
@@ -40,7 +46,7 @@ kubectl apply -f ./resource-manifests/kube
 
 ```
 
-4. Set up the Gateway for ingress HTTP requests
+5. Set up the Gateway for ingress HTTP requests
 
 ```bash
 
@@ -48,7 +54,7 @@ kubectl apply -f resource-manifests/istio/http-gateway.yaml
 
 ```
 
-5. Install the virtual services so that requests are routed
+6. Install the virtual services so that requests are routed
 
 ```bash
 
@@ -57,7 +63,7 @@ kubectl apply -f resource-manifests/istio/sa-virtualservice-external.yaml
 
 ```
 
-6. Open the application on the IP returned by:
+7. Open the application on the IP returned by:
 
 ```bash
 
